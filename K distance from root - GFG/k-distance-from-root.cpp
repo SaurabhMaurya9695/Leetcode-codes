@@ -116,18 +116,21 @@ struct Node
 }; */
 
 // function should print the nodes at k distance from root
+
 void helper(Node* root , int k , vector<int>& ans)
 {
-    if(k <0 || root== nullptr) return ;
-    if(k == 0)
+    // base case;
+    if(root == NULL) return ;
+    if(k == 0) // when k = 0 -> we have to add that no on our list ;
         ans.push_back(root->data);
-    helper(root->left , k- 1 , ans);
-    helper(root->right , k - 1 , ans);
+    helper(root->left , k - 1,  ans );
+    helper(root->right , k -1 , ans);
+    
     
 }
 vector<int> Kdistance(struct Node *root, int k)
 {
-    vector<int> ans;
-    helper(root, k , ans) ;
+    vector<int> ans ;
+    helper(root , k , ans);
     return ans;
 }
