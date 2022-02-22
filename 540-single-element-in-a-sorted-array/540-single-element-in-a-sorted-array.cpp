@@ -23,12 +23,50 @@ public:
         
         
         // using xor ;
-        int ans = 0;
-        for(int x : nums)
+        // int ans = 0;
+        // for(int x : nums)
+        // {
+        //     ans = ans ^ x;
+        // }
+        // return ans;
+        
+        
+        
+        
+            // first from starting if all of the element is appearing twice then first element should be occur at even index and next on at odd index; when the single element is present then its order should change ..means the first elemnt should occur at odd place and the net on is at even place;  
+        // i=   0 1 2 3 4 5 6 7 8  ( mid = 4)
+            // [1,1,2,3,3,4,4,8,8]
+            //  s                e          
+             //then should be atleast one elemnt present behind the array which occurs one time ;
+                int high = nums.size()-1;
+        int low = 0;
+        int mid;
+        
+        //Boundary cases
+        if(high==0)
+            return nums[0];
+        else if(nums[0]!=nums[1])
+            return nums[0];
+        else if(nums[high]!=nums[high-1])
+            return nums[high];
+
+        while(low<=high)
         {
-            ans = ans ^ x;
+            mid = low + (high-low)/2;
+            //Unique element condition
+            if(nums[mid]!=nums[mid+1] && nums[mid]!=nums[mid-1])
+                return nums[mid];
+            
+            if(((mid%2)==0 && nums[mid]==nums[mid+1])
+               ||  ((mid%2)==1 && nums[mid]==nums[mid-1]))
+                low = mid+1;
+            else
+                high = mid-1;
+            
         }
-        return ans;
+        return -1;
+                
+        
     }
 };
 static int x=[](){
