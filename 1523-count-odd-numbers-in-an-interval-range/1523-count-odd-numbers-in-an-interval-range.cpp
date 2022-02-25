@@ -17,25 +17,30 @@ public:
         //     }
         // }
         // return cnt;
-        int x = (high - low + 1) ;
-        // if(low == high)
-        //     return 1;
-        if(low % 2 == 0 &&  high % 2 == 0)
-        {
-            if(low == high)
-                return 0;
-            return x / 2 ;
-        }
-        else if (low % 2 == 1 &&  high % 2==1)
-        {
-            if(low == high)
-                return 1;
-            return 2 + (x -2) / 2 ;
-        }
-        else //if(low % 2 == 0 & high % 2 ==1)
-        {
-            return (x+ 1) / 2;
-        }
+        
+        
+                // Method 2; 
+        // int x = (high - low + 1) ;
+        // if(low % 2 == 0 &&  high % 2 == 0)
+        // {
+        //     if(low == high)
+        //         return 0;
+        //     return x / 2 ;
+        // }
+        // else if (low % 2 == 1 &&  high % 2==1)
+        // {
+        //     if(low == high)
+        //         return 1;
+        //     return 2 + (x -2) / 2 ;
+        // }
+        // else //if(low % 2 == 0 & high % 2 ==1)
+        // {
+        //     return (x+ 1) / 2;
+        // }
+        
+        
+                    // Method 3;
+        return low%2==0 && high%2==0 ? (high-low)/2 : (high-low)/2 + 1;
         
     }
 };
