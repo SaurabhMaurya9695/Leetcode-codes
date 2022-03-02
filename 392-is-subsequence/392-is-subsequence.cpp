@@ -1,21 +1,16 @@
 class Solution {
 public:
     bool isSubsequence(string s, string t) {
-        if(s.size() == 0) return true; // empty string always exist;
-        int ss = 0, tt = 0;
-        while(tt < t.size())
+        int n=t.length();
+        int m=s.length();
+        int p=0;
+        for(int i=0;i<n;i++)
         {
-            if(s[ss] == t[tt])
+            if(t[i]==s[p])
             {
-                ss++;
-                // at any point we get ss == s.size()  means string is present
-                if(ss == s.size())
-                    return true;
+                p++;
             }
-            
-            
-            tt++;
         }
-        return false;
+        return(p==m);
     }
 };
