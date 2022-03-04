@@ -12,10 +12,37 @@ public:
         
         
         // method 2;
-    {
-        char ret ='\0';
-        for (auto &c: s) ret^=c;
-        for (auto &c: t) ret^=c;
-        return ret;
+    // {
+    //     char ret ='\0';
+    //     for (auto &c: s) ret^=c;
+    //     for (auto &c: t) ret^=c;
+    //     return ret;
+    // }
+        
+        // method3
+        {
+            unordered_map<char,int> mp;
+            int n = s.size() ;
+            for(int i = 0 ; i< n; i++)
+            {
+                mp[s[i]]++;
+            }
+            for(int i = 0 ; i< t.size() ; i++)
+            {
+                mp[t[i]]--;
+            }
+            for(auto it:mp)
+            {
+                if(it.second != 0)
+                    return it.first ;
+            }
+            return '\0';
     }
+    
+    
+    
+    
+    
+    
+    
 };
