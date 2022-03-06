@@ -11,26 +11,26 @@
  */
 class Solution {
 public:
-    // we passed a bool marker that indicatesd that we are in the left side ;
-    void dfs(TreeNode* root , vector<int>& ans, bool flag)
+    void dfs(TreeNode* root , int &sum, bool flag)
     {
         if(root== NULL) return;
         if(root->left == NULL && root->right == NULL && flag == true)
         {
-            ans.push_back(root->val);
+            sum += (root->val);
         }
-        dfs(root->left , ans , true);
-        dfs(root->right, ans , false);
+        dfs(root->left , sum , true);
+        dfs(root->right, sum , false);
         
     }
     int sumOfLeftLeaves(TreeNode* root) {
-        vector<int> ans;
-        dfs(root, ans, false);
+        // vector<int> ans;
         int sum = 0;
-        for(int i =0; i< ans.size() ; i++)
-        {
-            sum+= ans[i];
-        }
+        dfs(root, sum, false);
+        // int sum = 0;
+        // for(int i =0; i< ans.size() ; i++)
+        // {
+        //     sum+= ans[i];
+        // }
         return sum;
     }
 };
