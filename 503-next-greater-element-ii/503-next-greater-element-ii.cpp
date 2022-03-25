@@ -5,9 +5,8 @@ public:
         int cnt= 2 ; // traverse the array two times ;
         stack<int> s;
         vector<int> arr1(n);
-        while(cnt--)
+        while(cnt--)  // in circular stack or queue question you just have to traverse arrya two times
         {
-
             for (int i = n - 1; i >= 0; i--)
             {		
                 while (!s.empty() && s.top() <= arr[i])
