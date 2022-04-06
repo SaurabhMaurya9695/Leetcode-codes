@@ -1,51 +1,63 @@
 class Solution {
 public:
-    
-    int ways(int idx , int n)
+    // top down recursion ;
+    int topdown(int n)
     {
-        // base case;
-        if(idx == n)
+        if(n == 1) 
+            return 1;
+        else if(n == 2)
+            return 2 ;
+        else{
+            return topdown(n-1) + topdown(n-2) ;
+        }
+        
+    }
+    
+    //bottom up recursion ;
+    int bottomup(int idx ,int n)
+    {
+        if(idx == n) // only one step is needed to be jump ;
             return 1;
         int ans = 0;
-        // no of ways to 1 ;
-        if(idx + 1 <=n)
-            ans+= ways(idx + 1 , n);
-        // no of ways to 2 ;
-        if(idx + 2 <=n)
-            ans+= ways(idx + 2 , n);
-        // no of ways to 3 ;
-        if(idx + 3 <=n)
-            ans+= ways(idx + 3 , n);
-        return ans ;
+        // take one step ;
+        if(idx + 1<=n)
+        {
+            ans += bottomup(idx+1 , n);
+        }
+        // take two step;
+        if(idx + 2 <= n)
+        {
+            ans += bottomup(idx + 2 ,  n);
+        }
+        return ans ;        
     }
     
-    int memo[46] = {};
-    int mways(int n)
+    // Memorization dp -> in  topdowm 
+    
+    int memo(int n , vector<int> &dp)
     {
-        if (n == 1)
+        if(n == 1) 
+            return 1;
+        else if(n == 2)
+            return 2 ;
+        if(dp[n] != -1)
         {
-            memo[n] = 1;
-            return memo[n];
+            return dp[n] ;
         }
-        if (n == 2)
-        {
-            memo[n] = 2;
-            return memo[n];
+        else{
+            dp[n] = memo(n-1 , dp ) + memo(n-2 , dp );
         }
-        else if (memo[n] != 0)
-            return memo[n]; 
-        memo[n] = mways(n - 1) + mways(n - 2);
-        return memo[n];
-        
-        
+        return dp[n] ;
     }
-    int climbStairs(int n) {
-        // recursive code;
-        // int ans = ways(0 , n);
+    int climbStairs(int n) 
+    {
+        // int res = topdown(n) ;  
+        // int res = bottomup (0 , n) ;
         
-        // memorization ;
-       
-        int ans2 = mways(n) ;
-        return ans2;
+        vector<int> dp(n+1 , -1) ;
+        int res= memo( n , dp);
+            
+        return res ;      
+        
     }
 };
