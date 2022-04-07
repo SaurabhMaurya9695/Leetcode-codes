@@ -37,6 +37,23 @@ public:
         return dp[index]=max(pick, notpick);
     }
     
+    //tabulation
+    int tab( vector<int>&nums , vector<int> &dp)
+    {
+        int n = nums.size();
+        // vector<int> dp(n, -1);
+        dp[0] = nums[0]; // base case initialization
+        for (int i = 1; i < n; i++){
+            int take = nums[i];
+            if(i>1)
+                take += dp[i - 2];
+            int not_take = dp[i - 1];
+            dp[i] = max(take, not_take);
+        }
+        return dp[n - 1];
+        
+    }
+    
     int rob(vector<int>& arr)
     {
         int n = arr.size()  ;
@@ -57,10 +74,17 @@ public:
         // long long int ans2 = solve(arr2.size() -1 , arr2);
         
         //memorization ;
-        vector<int> dp1(n + 1 , -1);
-        vector<int> dp2(n + 1 , -1);
-        long long int ans1 = solvememo(arr1.size() - 1 ,arr1 , dp1);
-        long long int ans2 = solvememo(arr2.size() -1 , arr2 , dp2);
+        // vector<int> dp1(n + 1 , -1);
+        // vector<int> dp2(n + 1 , -1);
+        // long long int ans1 = solvememo(arr1.size() - 1 ,arr1 , dp1);
+        // long long int ans2 = solvememo(arr2.size() -1 , arr2 , dp2);
+        
+        
+        //tabulation
+        vector<int> dp1(n  , -1);
+        vector<int> dp2(n  , -1);
+        long long int ans1 = tab( arr1 , dp1);
+        long long int ans2 = tab( arr2 , dp2);
 
         return max(ans1,ans2);
         
