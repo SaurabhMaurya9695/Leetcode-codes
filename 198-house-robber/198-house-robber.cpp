@@ -29,13 +29,32 @@ public:
         
     }
     
-    //Memorization ;
+    //tabulation 
+    int tab( vector<int>&nums)
+    {
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        dp[0] = nums[0]; // base case initialization
+        for (int i = 1; i < n; i++){
+            int take = nums[i];
+            if(i>1)
+                take += dp[i - 2];
+            int not_take = dp[i - 1];
+            dp[i] = max(take, not_take);
+        }
+        return dp[n - 1];
+        
+    }
+    
+    
     int rob(vector<int>& nums) 
     {
         int n = nums.size() ;
         // return solve( n -1 , nums) ;
-        vector<int> dp(n +1 , -1);
-        return (solvememo(n - 1 , nums , dp)) ;
+        vector<int> dp(n + 1 , -1);
+        // return (solvememo(n - 1 , nums , dp)) ;
+        
+        return tab( nums) ;
         
     }
 };
