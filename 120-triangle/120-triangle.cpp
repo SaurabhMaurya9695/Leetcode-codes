@@ -1,7 +1,31 @@
 class Solution {
 public:
+    int tab (vector<vector<int>> & arr , vector<vector<int>> &dp)
+    {
+        // we are writing recursion from 0 -> n-1 that's why we should write tabulation from n-1-> 0
+       int n = arr.size() ;
+        
+        // base case ;
+        for(int j = 0; j < n ; j++)
+        {
+            dp[n-1][j] = arr[n-1][j]; // filling the last state ;
+        }
+        
+        for(int i = n-2 ; i>=0 ; i--)
+        {
+            for(int j = i ; j>=0 ; j--)
+            {
+                int down = arr[i][j] + dp[i+1][j] ;
+                int diag = arr[i][j] + dp[i+1][j+1] ; 
+                // choose minimum ;
+                dp[i][j] =  min(down , diag) ; 
+            }
+        }
+        return dp[0][0] ;    
+        
+    }
     
-    
+    // Memorization 
     int memo(vector<vector<int> > &arr , int i , int j , int n , int m , vector<vector<int>> &dp )
     {
        if(i == n -1)
@@ -40,10 +64,11 @@ public:
     int minimumTotal(vector<vector<int>>& arr) 
     {
         int n = arr.size() ;int m = arr[0].size() ;
-        // return rec(arr ,  0 , 0 , n ,  m) ; 
+        // return rec(arr ,  0 , 0 , n ,  m) ;     ->  Recursion 
         
         vector<vector<int>> dp(n, vector<int>(n, -1) ) ;
-        //memset(dp , -1 , sizeof(dp)) ;
-        return memo(arr , 0 ,0 ,n , m , dp) ;
+        // return memo(arr , 0 ,0 ,n , m , dp) ;     -> Memorization
+        
+        return tab(arr , dp );
     }
 };
