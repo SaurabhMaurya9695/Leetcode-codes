@@ -1,50 +1,37 @@
 class Solution {
 public:
     
-    //recursion ;
-    int solve(vector<int>& cost,int n)
+    // recursion 
+    int solve(int idx , int dist , vector<int> &arr)
     {
-        if(n<2) return cost[n];
-        return cost[n]+min(solve(cost,n-1),solve(cost,n-2));
-    }
-    
-    // memorization ;
-    int memo(vector<int> &cost , vector<int> &dp , int n)
-    {
-        if(n<2) return cost[n];
-        if(dp[n]!=-1) return dp[n];
-        return dp[n]=cost[n]+min(memo(cost,dp ,n-1),memo(cost,dp ,n-2));
-    } 
-    
-    
-    //tabulation
-    int tab(vector<int> &cost , vector<int> &dp , int n)
-    {
-       if (cost.size() == 2) return min(cost[0], cost[1]);
-        
-        dp[0] = cost[0];
-        dp[1] = cost[1];
-        
-        for (int i = 2; i < n; i++)
-            dp[i] = cost[i] + min(dp[i - 1], dp[i - 2]);
-        
-        return min (dp[n - 1], dp[n - 2]);
+        if(idx <2) return arr[idx] ;
+        int left = solve(idx - 1 , dist , arr) ;
+        int right = solve(idx - 2 , dist , arr) ;
+        return (min(left , right) + arr[idx] );
         
     }
     
-    int minCostClimbingStairs(vector<int>& cost) 
+    // Memorization .
+    int Memo(int idx , int dist , vector<int> &arr , vector<int> & dp)
     {
-        int n=cost.size();
+        if(idx <2) return arr[idx] ;
+        if(dp[idx]  != -1)
+        {
+            return dp[idx] ;
+        }
+        int left = Memo(idx - 1 , dist , arr , dp) ;
+        int right = Memo(idx - 2 , dist , arr , dp) ;
+        return (dp[idx] = min(left , right) + arr[idx] );
         
-        //recursion 
-        // return min(solve(cost,n-1),solve(cost,n-2));
+    }
+    
+    int minCostClimbingStairs(vector<int>& cost)
+    {
+        int n = cost.size() ;
+        vector<int> dp (n + 1 , -1) ;
         
-        //memorization      
-        // vector<int> dp(n , -1);
-        // return min(memo(cost,dp ,n-1),memo(cost,dp ,n-2));
+        //return min(solve(n-1 , 0 , cost ) , solve(n-2 , 0 , cost)) ; // recursion ;
+        return min(Memo(n-1 , 0 , cost , dp ) , Memo(n-2 , 0 , cost , dp)) ;
         
-        // tabulation
-        vector<int> dp(n+1, 0);
-        return tab(cost , dp , n) ;
     }
 };
