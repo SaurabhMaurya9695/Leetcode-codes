@@ -1,3 +1,5 @@
+/*
+        Method 1 -> using Binary search 
 class Solution {
 public:
     vector<int> intersection(vector<vector<int>>& arr) 
@@ -31,6 +33,36 @@ public:
     }
     
 };
+*/
+            // Method 2 Map
+class Solution {
+public:
+    vector<int> intersection(vector<vector<int>>& arr) 
+    {
+        int n = arr.size(); int m = arr[0].size() ;
+        unordered_map<int,int> mp;
+        for(auto x : arr)
+        {
+            for(auto y : x)
+            {
+                mp[y]++;
+            }
+        }
+    //if any of the element is present in all this means its frequency is equal to n         
+        vector<int> ans ;
+        for(auto it : mp)
+        {
+            if(it.second == n)
+            {
+                ans.push_back(it.first) ;
+            }
+        }
+        sort(ans.begin() , ans.end()) ;
+        return ans ;
+    }
+    
+};
+
 static int x=[](){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
