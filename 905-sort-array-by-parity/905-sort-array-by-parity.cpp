@@ -22,6 +22,7 @@ public:
         // }
         // return even ;
         
+        
                     // Method 2;
         int start = 0 , end= n - 1;
         vector<int> ans(n) ;
