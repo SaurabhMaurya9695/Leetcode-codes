@@ -10,16 +10,32 @@ using namespace std;
 class Solution{   
 public:
 
-bool isSubsetSum(int N, int arr[], int sum){
-        vector<vector<int>> dp(N+1,vector<int>(sum+1,-1));
-        return go(0,sum,dp,N,arr);
-    }
-    bool go(int index,int S,vector<vector<int>> &dp,int n,int arr[]){
-        if(index>=n)
-            return S==0;
-        if(dp[index][S]!=-1)return dp[index][S];
+    int solve(int idx , int k , vector<int> &arr, vector<vector<int>> & dp)
+    {
+        // base case ;
+        if(idx == 0)
+        {
+            return (dp[idx][k] = ( (arr[0] == k ) ? true : false ) ) ;
+        }
+        if(k == 0) return true ;
+        if(dp[idx][k] != -1)
+        {
+            return dp[idx][k] ;
+        }
+        bool ntake = solve(idx - 1 , k ,arr , dp) ;
+        bool take = false; 
+        // explore cases ;
+        if(k - arr[idx] >= 0)
+           take = solve(idx - 1 , k - arr[idx] , arr, dp);
         
-        else dp[index][S]=go(index+1,S,dp,n,arr) || go(index+1,S-arr[index],dp,n,arr);
+        return dp[idx][k] = (take | ntake) ;
+    }
+    
+    bool isSubsetSum(vector<int>arr, int sum)
+    {
+        int n = arr.size() ;
+        vector<vector<int >> dp( n + 1 , vector<int> (sum + 1 , -1)) ;
+        return solve(n - 1 , sum , arr , dp) ;
     }
 };
 
@@ -32,14 +48,14 @@ int main()
     {
         int N, sum;
         cin >> N;
-        int arr[N];
+        vector<int> arr(N);
         for(int i = 0; i < N; i++){
             cin >> arr[i];
         }
         cin >> sum;
         
         Solution ob;
-        cout << ob.isSubsetSum(N, arr, sum) << endl;
+        cout << ob.isSubsetSum(arr, sum) << endl;
     }
     return 0; 
 } 
