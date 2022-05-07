@@ -1,37 +1,27 @@
-// class Solution {
-// public: // Time/Space: O(n); O(n)
-//     int maxOperations(vector<int>& nums, int k) {
-//         unordered_map<int, int> freq;
-//         int ans = 0;
-//         for(auto cur: nums){
-//             int complement = k - cur;
-//             if(freq[complement] > 0){ans++; freq[complement]--;}
-//             else freq[cur]++;
-//         }
-//         return ans;
-//     }
-// };
-
-//
 class Solution {
 public:
-    int maxOperations(vector<int>& nums, int k) {
-        sort(nums.begin(),nums.end());
-        int ans=0,i=0,j=nums.size()-1;
-        while(i<j)
+    int maxOperations(vector<int>& arr, int k) 
+    {
+     
+        sort(arr.begin(), arr.end()) ;
+        int start = 0, end = arr.size() - 1;
+        int cnt = 0;
+        while(start < end)
         {
-            if(nums[i]+nums[j]==k)
+            if(arr[start] + arr[end] == k)
             {
-                ans++,i++,j--;
+                cnt++;
+                start++;
+                    end--;
             }
-            else if(nums[i]+nums[j]>k)
+            else if(arr[start] + arr[end] > k)
             {
-                j--;
-            }else
-            {
-                i++;
+                end-- ;
+            }
+            else{
+                start ++ ;
             }
         }
-        return ans;
+        return (cnt ) ;
     }
 };
