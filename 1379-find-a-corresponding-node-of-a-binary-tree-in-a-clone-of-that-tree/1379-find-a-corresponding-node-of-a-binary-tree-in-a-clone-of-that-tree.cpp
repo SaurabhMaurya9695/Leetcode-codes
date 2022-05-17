@@ -13,16 +13,18 @@ public:
     
     TreeNode* solve(TreeNode* org , TreeNode* temp , TreeNode* k , TreeNode* & res)
     {
-        if(org != nullptr) // if org is not null ;
+        if(org != NULL)
         {
-            solve(org->left , temp->left , k , res); // goes in left ;
-            if(org == k)
+            //go in left & right ;
+            if(org == k  || org == k)
             {
-                res = temp;
+                res = temp ;
             }
-            solve(org->right , temp->right , k , res) ; // goes in right ;
+            solve(org->left , temp->left , k , res);
+            solve(org->right , temp->right , k , res) ;
         }
         return res ;
+            
         
     }
     TreeNode* getTargetCopy(TreeNode* org, TreeNode* temp, TreeNode* k) 
