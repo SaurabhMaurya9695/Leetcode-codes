@@ -1,98 +1,28 @@
 class Solution {
 public:
     
-    //recursion;
-    int solve(int i , int j)
+    int solve(int i , int j , int m , int n , vector<vector<int>> &dp)
     {
-        // base cases; 
-        if(i < 0 || j < 0) return 0; //boundary cases ;
-        if(i == 0 && j==0) 
-            return 1;
-        int left = solve(i , j-1) ;
-        int up = solve(i-1 , j) ;
-        return left + up ;
-        
-    }
-    
-    // Memorization ;
-    int solvememo(int i , int j , vector<vector<int>> &dp)
-    {
-        if(i < 0 || j < 0) return 0; //boundary cases ;
-        if(i == 0 && j==0) 
-            return 1;
-        if(dp[i][j] != -1)
-            return dp[i][j] ;
-        int left = solvememo(i , j-1, dp) ;
-        int up = solvememo(i-1 , j , dp) ;
-        return dp[i][j] = (left + up) ;
-    }
-
-    // space optimization
-    int space(int m , int n )
-    {       
-        vector<int> prev(n,0);
-        for(int i=0; i<m; i++)
+        if(i ==  m - 1 || j == n-1)
         {
-            vector<int> temp(n,0);
-            for(int j=0; j<n; j++)
-            {
-                if(i==0 && j==0)
-                {
-                    temp[j]=1;
-                    continue;
-                }
-
-                int up=0;
-                int left =0;
-
-                if(i>0)
-                    up = prev[j];
-                if(j>0)
-                    left = temp[j-1];
-
-                temp[j] = up + left;
-            }
-            prev = temp;
+            return 1 ;
+        }
+        if(i < 0 ||j  < 0)
+        {
+            return INT_MAX ;
+        }
+        if(dp[i][j] != -1)
+        {
+            return dp[i][j] ;
+        }
+        int right = solve(i + 1 , j , m , n , dp) ;
+        int down = solve(i , j + 1 , m , n , dp);
+        return dp[i][j] = (right + down) ;
     }
-    
-    return prev[n-1];
-        
-    }
-    
-    int uniquePaths(int m, int n)
+    int uniquePaths(int m, int n) 
     {
-        //vector<vector<int>> dp(m , vector<int> (n, -1)) ;
-        // return solve(m-1 , n-1) ;   //recursion call;
+        vector<vector<int>> dp(m + 1 , vector<int>(n + 1 , -1));
+        return solve(0 , 0 , m , n, dp) ;
         
-        // return solvememo(m-1 , n-1 , dp); // memorization ;
-        
-        //Tabulation
-        // int dp[m][n] ;        
-        // for(int i = 0; i< m ;i++)
-        // {
-        //     for(int j =0 ; j< n ; j++)
-        //     {
-        //         if(i == 0 && j== 0)
-        //         {
-        //             dp[i][j] = 1;
-        //         }
-        //         else{
-        //             int left = 0 , right = 0 ;
-        //                 if(i > 0) 
-        //                 {
-        //                      left  = dp[i-1][j] ;
-        //                 }
-        //                 if(j > 0)
-        //                 {
-        //                      right = dp[i][j-1];
-        //                 }
-        //                 dp[i][j] = left + right ;
-        //             }
-        //     }
-        // }
-        // return (dp[m-1][n-1]) ;
-        
-        
-        return space(m , n ) ;
     }
 };
