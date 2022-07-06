@@ -17,7 +17,14 @@ public:
             } else if(nums[i+1] == nums[i]) {
                 continue;
             } else {
-                maxCountLength = max(maxCountLength, countLength);
+                // maxCountLength = max(maxCountLength, countLength);
+                if(countLength > maxCountLength)
+                {
+                    maxCountLength = countLength ;
+                }
+                else{
+                    maxCountLength = maxCountLength;
+                }
                 countLength = 0;
             }
         }
