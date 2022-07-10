@@ -77,6 +77,7 @@ public:
     bool isIdealPermutation(vector<int>& nums) {
         ll n = nums.size() ;
         ll local = 0;
+        ios_base::sync_with_stdio(false);cin.tie(NULL);
         for(int i = 0 ; i< n - 1 ; i++)
         {
             if(nums[i] > nums[i + 1])
