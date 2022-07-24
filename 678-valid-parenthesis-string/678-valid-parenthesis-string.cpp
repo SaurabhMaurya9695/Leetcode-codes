@@ -1,39 +1,46 @@
 class Solution {
 public:
     bool checkValidString(string s) {
+        int n = s.size() ;
+        stack<int> openstack , starstack;
         
-        stack<int> open,star;
-        int len = s.length();
-        
-        for(int i=0;s[i]!='\0';++i)
+        for(int i = 0 ; i< n; i++)
         {
-            if(s[i]=='(')
-                open.push(i);
-            else if(s[i]=='*')
-                star.push(i);
-            else
-            {   // case 3 : ')'
-                if(!open.empty())
-                    open.pop();
-                else if(!star.empty())
-                    star.pop();
-                else
+            if(s[i] == '(')
+            {
+                openstack.push(i); // we are pushing index
+            }
+            else if(s[i] == '*')
+            {
+                starstack.push(i);
+            }
+            else if(s[i] ==')') // *())) , )*
+            {
+                if(openstack.size() > 0) // !openstack.empty();
+                {
+                    openstack.pop();
+                }
+                else if(starstack.size() > 0 )
+                {
+                    starstack.pop();
+                }
+                else {
                     return false;
+                }
             }
         }
-        
-        //Now process leftover opening brackets
-        while(!open.empty())
+        while(!openstack.empty())
         {
-            if(star.empty())
-                return false;
-            else if(open.top() < star.top())
+            if(starstack.size() == 0 ) return false; 
+            else if(openstack.top() < starstack.top())
             {
-                open.pop();
-                star.pop();
+                openstack.pop();
+                starstack.pop();
             }
-            else    //CASE: open.top() > star.top()
+            else { 
+                // openstack.top() > starstack.top()
                 return false;
+            }
         }
         return true;
     }
