@@ -1,5 +1,8 @@
 // class Solution {
 // public:
+
+                            // Method 1;
+
     // int minSwaps(string s) {
     //     int n = s.size() ;
     //     int cnt =0;
@@ -26,6 +29,8 @@
     // }
 // };
 
+                        // Method 2
+
     class Solution {
 public:
     int minSwaps(string s) {
@@ -48,15 +53,48 @@ public:
         //     start++;
         // }
         // return ans;
-        int close=0 , maxClose=0;
-        for(char ch:s)
+        
+                            //Method 3
+        // int close=0 , maxClose=0;
+        // for(char ch:s)
+        // {
+        //     if(ch==']')
+        //         close++;
+        //     else if(ch == '[')
+        //         close--;
+        //     maxClose=max(maxClose,close);
+        // }
+        // return (maxClose + 1)/2;
+        
+        
+                                //Method 4
+        
+        
+        int n = s.size();
+        int open = 0 , ans = 0;
+        for(int i = 0 ;i<n ; i++)
         {
-            if(ch==']')
-                close++;
-            else if(ch == '[')
-                close--;
-            maxClose=max(maxClose,close);
+            if(s[i] == '[')
+            {
+                open++;
+            }
+            else if(s[i] == ']')
+            {
+                if(open > 0)
+                {
+                    open--;
+                }
+                else{
+                    ans++;
+                }
+            }
         }
-        return (maxClose + 1)/2;
+        return (ans % 2 == 1) ? (ans / 2 + 1) : (ans / 2);
+        
+        
+
+        
+        
+        
     }
 };
