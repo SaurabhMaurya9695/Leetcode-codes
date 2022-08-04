@@ -4,47 +4,43 @@ public:
         int n = arr.size() ;
         if(n<=2) return 0;
          
-        // computing the right max;
-        vector<int> leftmax(n , 0) ;
-        leftmax[0] = arr[0] ;
-        for(int i = 1 ; i< n ;i++)
+        // using two pointer;
+        int left_b = arr[0] ;
+        int right_b = arr[n-1];
+        
+        int left = 1 , right = n-2;
+        int ans = 0;
+        while(left <= right)
         {
-            if(leftmax[i-1] > arr[i])
+            if(left_b < right_b) // we are taking the smaller one;
             {
-                leftmax[i] = leftmax[i-1];
+                if(arr[left] >= left_b)
+                {
+                    left_b = arr[left]; 
+                }
+                else{
+                    ans += (left_b - arr[left]);
+                }
+                left++;
             }
             else{
-                leftmax[i] = arr[i];
+                    if(arr[right] >= right_b)
+                    {
+                        right_b = arr[right];
+                    }
+                    else{
+                        ans += (right_b - arr[right]);
+                    }
+                    right--;
             }
+            
+            
         }
         
-        // computing rightmax;
-        vector<int> rightmax(n , 0);
-        rightmax[n-1] = arr[n-1];
-        for(int i = n -2 ; i>=0 ; i--)
-        {
-            if(rightmax[i+1] > arr[i])
-            {
-                rightmax[i] = rightmax[i + 1]; 
-            }
-            else{
-                rightmax[i] = arr[i];
-            }
-        }
-        for(int x : leftmax)
-        {
-            cout<< x << " ";
-        }
-        cout<< endl;
+        return ans;
         
-        int water = 0 ;
-        // to get the trapping water we should subtract our height from the min(left, right);
-        for(int i = 0; i< n; i++)
-        {
-            water +=  min(leftmax[i] , rightmax[i])  - arr[i] ;
-        }
         
-        return water;
+        
         
     }
 };
