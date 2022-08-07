@@ -1,46 +1,50 @@
 class Solution {
 public:
-    int trap(vector<int>& arr) {
-        int n = arr.size() ;
-        if(n<=2) return 0;
-         
-        // using two pointer;
-        int left_b = arr[0] ;
-        int right_b = arr[n-1];
-        
-        int left = 1 , right = n-2;
-        int ans = 0;
-        while(left <= right)
+    
+    vector<int> leftboundary(vector<int>  arr ,int n)
+    {
+        vector<int> left_b(n ,  0);
+        left_b[0] = arr[0] ; // for now I'm the biggest boundary;
+        for(int i = 1 ; i< n ; i++)
         {
-            if(left_b < right_b) // we are taking the smaller one;
+            if(arr[i] > left_b[i-1]) // 0 1 0 2 1 
+                                     // 0 
             {
-                if(arr[left] >= left_b)
-                {
-                    left_b = arr[left]; 
-                }
-                else{
-                    ans += (left_b - arr[left]);
-                }
-                left++;
+                left_b[i] = arr[i];
             }
             else{
-                    if(arr[right] >= right_b)
-                    {
-                        right_b = arr[right];
-                    }
-                    else{
-                        ans += (right_b - arr[right]);
-                    }
-                    right--;
+                left_b[i] = left_b[i-1];
             }
-            
-            
         }
+        return left_b;
         
-        return ans;
+    }
+    vector<int> rightboundary(vector<int> arr , int n)
+    {
+        vector<int> right_b(n,0);
+        right_b[n-1] = arr[n-1];
+        for(int i = n-2 ; i>=0 ; i--)
+        {
+            if(arr[i] > right_b[i+1]) // n- 2 + 1; => n - 1;
+            {
+                right_b[i] = arr[i];
+            }
+            else{
+                right_b[i] = right_b[i+1];
+            }
+        }
+        return right_b;
         
-        
-        
-        
+    }
+    int trap(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> left = leftboundary(arr , n);
+        vector<int> right = rightboundary(arr , n);
+        int water =0 ;
+        for(int i = 0 ; i< n ; i++)
+        {
+            water += min(left[i] , right[i]) - arr[i];
+        }
+        return water ;
     }
 };
