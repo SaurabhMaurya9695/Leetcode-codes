@@ -3,26 +3,22 @@ class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) 
     {
-        if(head == NULL ) // size == 0
-            return head;
-        if(head->next == NULL) // size == 1
+        ListNode * dummy = new ListNode(-1e8);
+        ListNode * itr = dummy;
+        ListNode * curr = head;
+        while(curr != NULL)
         {
-            return head;
-        }
-        ListNode * prev = head;
-        while(prev->next != NULL)
-        {
-            if(prev->val == prev->next->val)
+            while(curr != NULL &&  itr->val == curr->val )
             {
-                ListNode * temp = prev->next;
-                prev->next = prev->next->next;
-                delete temp;
+                curr = curr -> next;
             }
-            else{
-                prev = prev->next;
-            }
+            
+            itr-> next = curr;
+            itr = itr -> next;
+            if(curr != NULL) curr = curr->next;
+            
         }
-        return head;
+        return dummy-> next;
         
     }
 };
