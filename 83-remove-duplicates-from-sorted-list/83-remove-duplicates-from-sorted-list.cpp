@@ -15,11 +15,11 @@ public:
             else{
                 itr-> next = curr; 
                 itr = itr -> next;
-                 curr = curr->next;
+                curr = curr->next;
             }
    
         }
-        if(itr != NULL)
+        
             itr-> next = NULL;
         return dummy-> next;
         
