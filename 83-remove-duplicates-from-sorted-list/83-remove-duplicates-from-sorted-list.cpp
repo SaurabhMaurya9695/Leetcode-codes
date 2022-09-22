@@ -8,16 +8,21 @@ public:
         ListNode * curr = head;
         while(curr != NULL)
         {
-            while(curr != NULL &&  itr->val == curr->val )
+            if( itr->val == curr->val )
             {
                 curr = curr -> next;
             }
+            else{
+                itr-> next = curr; 
+                itr = itr -> next;
+                if(curr != NULL) curr = curr->next;
+            }
             
-            itr-> next = curr;
-            itr = itr -> next;
-            if(curr != NULL) curr = curr->next;
+            
             
         }
+        if(itr  != NULL)
+            itr-> next = NULL;
         return dummy-> next;
         
     }
