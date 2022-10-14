@@ -1,36 +1,45 @@
 class Solution {
 public:
-    int firstMissingPositive(vector<int>& nums) 
+
+    int firstMissingPositive(vector<int>& arr) 
     {
-        int n = nums.size() ;
-        int maxi = *max_element(nums.begin(), nums.end());
-        int mini = *min_element(nums.begin(), nums.end());
+        int n = arr.size() ;
         set<int> st ;
-        unordered_map<int, int > mp;
-        int cnt = 0 ;
-        for(auto x : nums)
+        for(auto x : arr)
         {
-            if(x < 0) cnt++;
-            mp[x]++;
-        }
-        int ans = -1;
-        for(int i = 1 ; i<=maxi ; i++)
-        {
-            if(mp.find(i) == mp.end() )
-            {
-                ans = i;
-                break;
+            if(x > 0) {
+                st.insert(x);
             }
         }
-        if(cnt == n)
+        bool ok = false;
+        int idx = 0;
+        vector<int> ans(st.begin() , st.end()) ;
+        if(ans.size() == 0) return 1 ;
+        else {
+            
+                if(ans[0] == 1) 
+                {
+                    // 1 2
+                    for(int i = 0  ; i<  ans.size() - 1 ; i ++)
+                    {
+                        if(abs(ans[i] - ans[i + 1] ) != 1)
+                        {
+                            ok = true;
+                            idx = i + 2 ;
+                            break;
+                        }
+                    }
+                }
+                else{
+                    return 1 ;
+                }
+            }
+        if(ok ==  false)
         {
-            return 1 ;
-        }
-        else if(ans == -1){
-            return maxi  + 1;
+            return ans[ans.size() - 1] + 1 ;
         }
         else{
-            return ans ;
+            return idx ;
         }
         
     }
