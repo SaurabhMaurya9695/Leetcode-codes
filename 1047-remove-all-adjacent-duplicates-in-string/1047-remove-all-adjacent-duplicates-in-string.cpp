@@ -1,25 +1,31 @@
 class Solution {
 public:
     string removeDuplicates(string s) {
-        string ans=""; // take a string
-        for(int i=0;i<s.size();i++)
+        stack<char > stk;
+        for(int i = 0 ; i< s.size() ; i++)
         {
-            if(ans.size()) // if there is any of the char present then check
+             if(!stk.empty())
             {
-                if(ans[ans.size()-1]==s[i]) // last char in string and the char of s[i]  is equal then we pop() otherwise push ;
+                if(stk.top() == s[i])
                 {
-                    ans.pop_back();
+                    stk.pop();
                 }
-                else
-                {
-                    ans.push_back(s[i]);
-                }
+                 else{
+                     stk.push(s[i]);
+                 }
             }
-            else // if string doesn't have any char
-            { 
-                ans.push_back(s[i]); // push into string ;
+            else{
+                stk.push(s[i]);
             }
         }
-        return ans; // return that string ;
+        string ans = "";
+        while(stk.size() != 0)
+        {
+            char ch =  stk.top();
+            stk.pop();
+            ans += ch;
+        }
+        reverse(ans.begin() , ans.end());
+        return ans ;
     }
 };
