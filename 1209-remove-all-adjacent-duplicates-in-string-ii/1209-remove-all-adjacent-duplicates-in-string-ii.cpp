@@ -1,37 +1,38 @@
 class Solution {
 public:
-    string removeDuplicates(string s, int k) {
-        int n = s.size();
-        if(n<k) return s;
-        
-        stack<pair<char,int>> stack;
-        for(int i=0; i<n; ++i)
+    string removeDuplicates(string s, int k) 
+    {
+        stack<pair<char , int >>  stk;
+        int n = s.size() ;
+        for(int i = 0 ; i < n ; i++)
         {
-            if(stack.empty() || stack.top().first != s[i])
+            if(stk.size() == 0 || stk.top().first != s[i])
             {
-                stack.push({s[i],1});  
-            } 
-            else
-            {
-                auto prev = stack.top(); // means we got an equal char ;
-                stack.pop(); // we pop that char
-                stack.push({s[i], prev.second+1}); // increase the cnt 
+                stk.push({s[i] , 1});
             }
-            if(stack.top().second==k) stack.pop(); // if its cnt  == k then pop ;
+            else if( stk.size() > 0 &&  stk.top().first == s[i])
+            {
+                pair<char , int > pp = stk.top() ;
+                stk.pop();
+                stk.push({s[i] , pp.second + 1 });
+            }
+            if(stk.top().second == k)
+            {
+                stk.pop();
+            }
+                
         }
-        
-        string ans = "";
-        while(!stack.empty())
+        string ans ;
+        while(!stk.empty())
         {
-            auto cur = stack.top();
-            stack.pop();
-            while(cur.second--)
+            pair<char , int > pp = stk.top();
+            while(pp.second --)
             {
-                ans.push_back(cur.first);
+                ans += pp.first ;
             }
+            stk.pop();
         }
-        reverse(ans.begin(), ans.end());
-        
-        return ans;
+        reverse(ans.begin() , ans.end());
+        return ans ;
     }
 };
