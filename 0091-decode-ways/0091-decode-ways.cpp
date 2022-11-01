@@ -1,13 +1,16 @@
 class Solution {
 public:
     
-    // Recursion    
+    // Recursion + Memorization 
     int solve(int idx , string s , int n , vector<int>&dp)
     {
         int left = 0 , right  = 0 ;
         if(idx == n)
         {
-            return 1;
+            if(s[idx] == '0') return 0 ;   // 0
+            else{
+                return 1;
+            }
         }
         // lookup table;
         if(dp[idx] != - 1)
@@ -19,6 +22,9 @@ public:
         {
             left += solve(idx + 1 , s, n , dp);
         }
+        else{
+            left += 0;
+        }
         if(idx+1 < n)
         {
             int ch2 =  (s[idx] - '0') * 10 + (s[idx + 1] - '0');
@@ -26,9 +32,12 @@ public:
             {
                 right += solve(idx + 2 , s, n, dp);
             }
+            else{  //61 58
+                right += 0;
+            }
         }
-        dp[idx] =  left + right ;
-        return dp[idx];
+         int ans =  left + right ;
+        return dp[idx] = ans ;
     }
     int numDecodings(string s) 
     {
@@ -36,4 +45,14 @@ public:
         vector<int> dp(n + 1 , -1);
         return solve(0, s, n , dp);
     }
+    
+    
+   
 };
+
+
+
+
+
+
+
