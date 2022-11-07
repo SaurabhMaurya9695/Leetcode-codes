@@ -17,21 +17,42 @@ public:
         // vector<int> dp(n + 1 , -1);
         //Tabulation 
         
-        vector<int> dp(n + 1) ;
-        if(n == 0 || n == 1) return 1;
-        dp[0] = 1;
-        dp[1] = 1 ;
-        dp[2] = 2 ;
-        for(int i = 3 ; i <= n; i++)
-        {
-            dp[i ] = dp[i - 1] + dp[i - 2];
-        }
+        // vector<int> dp(n + 1) ;
+        // if(n == 0 || n == 1) return 1;
+        // dp[0] = 1;
+        // dp[1] = 1 ;
+        // dp[2] = 2 ;
+        // for(int i = 3 ; i <= n; i++)
+        // {
+        //     dp[i ] = dp[i - 1] + dp[i - 2];
+        // }
         // return dp[n];
-        for(auto x : dp)
+        
+        
+        
+        //space optimization
+        if(n == 0 || n == 1) return 1;
+        if(n == 2) return 2;
+        int a = 1 ;
+        int b = 2;
+        int c = 0 ;
+        for(int i = 3 ; i<=n ; i++)
         {
-            cout<< x << " ";
+            c = a +  b ;
+            a = b;
+            b = c;
         }
-        return dp[n];
+        return c ;
+        
         
     }
 };
+
+
+
+
+
+
+
+
+
