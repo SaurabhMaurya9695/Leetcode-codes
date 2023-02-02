@@ -1,16 +1,23 @@
 class Solution {
 public:
     int countKDifference(vector<int>& arr, int k) {
-        int cnt = 0;
-        for(int i = 0 ;i < arr.size() ; i ++)
+        // |nums[i] - nums[j]| == k 
+        // nums[i] - nums[j] = k  || -nums[i] + nums[j] = k
+        // nums[j] = nums[i] - k  || nums[i] + k ;
+        // x +  y = k
+        int cnt = 0 ;
+        unordered_map<int,int> mp ;
+        for(int i = 0 ; i < arr.size() ; i ++)
         {
-            for(int j = 0 ; j< arr.size()  ; j++)
+            if(mp.find(arr[i] +k) != mp.end())
             {
-                if(i < j && abs(arr[i] - arr[j]) == k)
-                {
-                    cnt++;
-                }
+                cnt += mp[arr[i] + k] ;
             }
+            if(mp.find(arr[i] - k) != mp.end())
+            {
+                cnt += mp[arr[i] - k] ;
+            }
+            mp[arr[i]] ++;
         }
         return cnt ;
     }
