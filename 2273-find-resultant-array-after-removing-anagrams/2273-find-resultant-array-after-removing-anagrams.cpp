@@ -1,29 +1,28 @@
 class Solution {
 public:
     
-    string  check(string s)
+    bool check(string s,  string t)
     {
         sort(s.begin() , s.end());
-        return s ;
+        sort(t.begin() , t.end());
+        return s == t ;
     }
-    vector<string> removeAnagrams(vector<string>& s) 
-    {
-       int n = s.size() ;
+    
+    vector<string> removeAnagrams(vector<string>& words) {
         vector<string> ans ;
-        ans.push_back(s[0]) ;
-        string prev = s[0];
-        for(int i  = 1   ; i < n ; i++)
+        ans.push_back(words[0]) ;
+        string ok = words[0];
+        for(int i = 1; i < words.size() ; i ++)
         {
-            if(check(prev)  == check(s[i])) // anagram ;
+            if(check(ok , words[i]) == true)
             {
                 continue;
             }
             else{
-                prev = s[i];
-                ans.push_back(s[i]);
+                ok = words[i];
+                ans.push_back(words[i]) ;
             }
         }
         return ans ;
-        
     }
 };
