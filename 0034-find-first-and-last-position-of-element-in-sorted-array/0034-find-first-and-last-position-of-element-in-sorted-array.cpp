@@ -45,8 +45,30 @@ public:
     }
     
     vector<int> searchRange(vector<int>& nums, int target) {
-        int focc = lower_bound(nums , target) ;
-        int locc = upper_bound(nums , target ) ;
-        return {focc , locc} ;
+        // int focc = lower_bound(nums , target) ;
+        // int locc = upper_bound(nums , target ) ;
+        // return {focc , locc} ;
+        
+        vector<int> ans ;
+        if(binary_search(nums.begin() , nums.end() , target) )
+        {
+            int fcc = std::lower_bound(nums.begin(), nums.end() , target) - nums.begin() ;
+            int lcc = std::upper_bound(nums.begin(), nums.end() , target) - nums.begin() - 1;
+            return {fcc , lcc} ;
+        }
+        else{
+            return {-1,-1};
+        }
     }
 };
+
+
+
+
+
+
+
+
+
+
+
