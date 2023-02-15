@@ -31,9 +31,9 @@ class Solution{
             else{
                 start = mid + 1 ;
             }
-            ans = start - 1;
+            // ans = start - 1;
         }
-        return ans ;
+        return start - 1 ;
         
     }
 };
