@@ -17,9 +17,7 @@ class Solution {
         while(start <= end){
             int mid = start + (end - start) / 2;
             if(arr[mid] == key){
-                p.js = arr[mid] ;
-                p.jg = arr[mid] ;
-                break;
+                return new Pair(arr[mid] , arr[mid]) ;
             }
             else if(arr[mid] < key){
                 p.js = arr[mid] ;
