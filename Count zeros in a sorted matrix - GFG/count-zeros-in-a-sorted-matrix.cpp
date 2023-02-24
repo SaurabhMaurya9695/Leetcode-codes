@@ -1,32 +1,35 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 //Back-end complete function Template for C++
 
 class Solution{
 public:
 	int countZeros(vector<vector<int>>arr)
 	{
-		int n = arr.size();
-		int cnt = 0;
-		for(int i = 0; i< n; i++)
+	    int n = arr.size() ;
+		int i = 0 , j = n - 1;
+		int ans = 0;
+		while(i < n && j>= 0)
 		{
-		    for(int j =0; j< n; j ++)
-		    {
-		        if(arr[i][j] == 0)
-		        {
-		            cnt++;
-		        }
+		    if(arr[i][j] == 0){
+		        // we get our ans in dowm
+		        ans += (j + 1);
+		        i++;
+		    }
+		    else if(arr[i][j] == 1){
+		        // we have to check in left 
+		        j -- ;
 		    }
 		}
-		return cnt ;
+		return ans ;
 	}
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 // Driver program
 int main()
@@ -48,4 +51,5 @@ int main()
     }
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
