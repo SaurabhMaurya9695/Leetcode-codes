@@ -1,13 +1,11 @@
 # Allocate minimum number of pages
-## Hard 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">You are given <strong>N </strong>number of books. Every <strong>ith</strong> book has<strong> Ai</strong> number of pages.<br>
-<br>
-You have to allocate contagious books to <strong>M </strong>number of students. There can be many ways or permutations to do so. In each permutation, one of the M students will be allocated the maximum number of pages. Out of all these permutations, the task is to find that particular permutation in which the maximum number of pages allocated to a student is the minimum of those in all the other permutations and print this minimum value.</span></p>
+## Hard
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">You are given <strong>N </strong>number of books. Every <strong>ith</strong> book has<strong> Ai</strong> number of pages.&nbsp;</span><br>
+<span style="font-size:18px">You have to allocate contiguous&nbsp;books to <strong>M </strong>number of students. There can be many ways or permutations to do so. In each permutation, one of the M students will be allocated the maximum number of pages. Out of all these permutations, the task is to find that particular permutation in which the <strong>maximum number of pages allocated to a student is the minimum</strong> of those in all the other permutations and <strong>print this minimum value</strong>.</span></p>
 
 <p><span style="font-size:18px">Each book will be allocated to exactly one student. Each student has to be allocated at least one book.</span></p>
 
-<p><span style="font-size:18px">Note: Return <strong>-1</strong> if a valid assignment is not possible, and allotment should be in contiguous order (see the explanation for better understanding).</span></p>
+<p><span style="font-size:18px"><strong>Note</strong>: Return <strong>-1</strong> if a valid assignment is not possible, and allotment should be in contiguous order (see the explanation for better understanding).</span></p>
 
 <p>&nbsp;</p>
 
@@ -19,12 +17,12 @@ A[] = {12,34,67,90}
 M = 2
 <strong>Output:</strong>113
 <strong>Explanation:</strong>Allocation can be done in 
-following ways:{12} and {34, 67, 90} 
-Maximum Pages = 191{12, 34} and {67, 90} 
-Maximum Pages = 157{12, 34, 67} and {90} 
-Maximum Pages =113. Therefore, the minimum 
-of these cases is 113, which is selected 
-as the output.</span></pre>
+following ways:
+{12} and {34, 67, 90} Maximum Pages = 191
+{12, 34} and {67, 90} Maximum Pages = 157
+{12, 34, 67} and {90} Maximum Pages =113.
+Therefore, the minimum of these cases is 113,
+which is selected as the output.</span></pre>
 
 <p><br>
 <span style="font-size:18px"><strong>Example 2:</strong></span></p>
@@ -51,5 +49,4 @@ You don't need to read input or print anything. Your task is to complete the fun
 1 &lt;= M &lt;= 10<sup>5</sup></span></p>
 
 <p>&nbsp;</p>
- <p></p>
-            </div>
+</div>
