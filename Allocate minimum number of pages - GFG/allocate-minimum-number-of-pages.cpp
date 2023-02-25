@@ -1,62 +1,69 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 // Initial template for C++
 
 #include<bits/stdc++.h>
 using namespace std;
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 //User function template in C++
 
 class Solution 
 {
-    bool isPossible(int pages[] , int books, int maxLoad, int totalStud){
-        int currStud = 1, currPages = 0;
-
-        for(int i=0; currStud <= totalStud && i<books; i++){
-
-            if(currPages + pages[i] <= maxLoad){
-                currPages += pages[i];
-            } else {
-                currStud++;
-                currPages = pages[i];
-            }
-
-        }
-
-        if(currStud > totalStud) return false;
-        return true;
-    }
     public:
-    //Function to find minimum number of pages.
-    int findPages(int pages[], int books , int students)
-    {
-        int start = *max_element(pages, pages + books) ;// min no of pages can read by student
-        int sum = 0 ;
-        int n = books ;
-        for(int i =0 ; i< n; i++)
-        {
-            sum += pages[i];
-        }
-        int high = sum ;
-        int ans = -1;
-        while(start <= high)
-        {
-            int mid = start + ( high -  start) / 2;
-            if(isPossible(pages, books, mid, students) == true) // is should be a possible ans;
+    bool isPossibleToRead(int pages[] , int noofbooks ,  int maxLimit , int maxStudent){
+        int curr_sum = 0 ;
+        int curr_student =  1 ; // by default one student is reading now
+        for(int i = 0 ; i < noofbooks && curr_student <= maxStudent; i ++){
+            if(curr_sum + pages[i] <= maxLimit) // we have to read every time ;
             {
-                ans = mid;
-                high = mid - 1;
+                curr_sum += pages[i]; // student 1- > 10, 20 ,30 , 40 mid= 58 ,
+                //s1 ca read only 30
             }
             else{
-                start = mid + 1 ;
+                curr_student ++ ;
+                curr_sum = pages[i] ; // 30
             }
         }
-        return ans;
+        if(curr_student > maxStudent) return false;
+        else return true ;
+    }
+    
+    
+    
+    //Function to find minimum number of pages.
+    int findPages(int pages[], int noofbooks, int student) 
+    {
+        if(student > noofbooks) return -1;
+        // *max_element(arr , arr + n) ;
+        // one student can read max pages of books -> which is read by one student
+        int start = *max_element(pages , pages + noofbooks) ;
+        //our end is total sum -> s2 can readall the books 
+        int sum = 0 ;
+        for(int i = 0 ; i < noofbooks ; i ++){
+            sum += pages[i];
+        }
+        int end = sum ;
+        int ans = -1; // if no such mini value found 
+        
+        while(start <= end){
+            int mid = start + (end - start) / 2;
+            // we gave the max load to every student to read only mid books 
+            if(isPossibleToRead(pages , noofbooks ,  mid , student) == true){
+                ans = mid;
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
+            }
+        }
+        return ans ;
+        
+        
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main() {
     int t;
@@ -75,4 +82,5 @@ int main() {
     }
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
