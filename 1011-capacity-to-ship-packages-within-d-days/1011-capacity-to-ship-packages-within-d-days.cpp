@@ -1,52 +1,69 @@
+
 class Solution {
 public:
-    
-         bool isPossible(vector<int> pages , int books, int maxLoad, int totalStud){
-        int currStud = 1, currPages = 0;
-
-        for(int i=0; currStud <= totalStud && i<books; i++){
-
-            if(currPages + pages[i] <= maxLoad){
-                currPages += pages[i];
-            } else {
-                currStud++;
-                currPages = pages[i];
+    int findmaxi(vector<int>& pages , int books)
+    {
+        int maxi = INT_MIN;
+        for(int i = 0; i< books ; i++)
+        {
+            if(pages[i] > maxi)
+            {
+                maxi = pages[i];
             }
-
         }
-
-        if(currStud > totalStud) return false;
-        return true;
+        return maxi ;
     }
     
-    int findPages(vector<int> pages, int books , int students)
+    bool  ispossible(vector<int>& pages , int books , int totalstu , int mid)
     {
-        int start = *max_element(pages.begin() , pages.end()) ;// min no of pages can read by student
+        int currstudent = 1;
+        int totalreadbystud = 0;
+        for(int i = 0 ; i< books ; i++)
+        {
+            totalreadbystud += pages[i] ; // 20 + 10 + 30 + 40 // mid - > 70 
+            if(totalreadbystud > mid)
+            {
+                currstudent++;
+                totalreadbystud = pages[i] ;
+            }
+        }
+        if(currstudent > totalstu) 
+            return false;
+        else{
+            return true ;
+        }
+        
+    }
+    int findpages(vector<int>& pages, int books, int totalstud) 
+    {
+        int start =  findmaxi(pages , books);
         int sum = 0 ;
-        int n = books ;
-        for(int i =0 ; i< n; i++)
+        for(int i = 0 ; i< books ; i++)
         {
             sum += pages[i];
         }
-        int high = sum ;
-        int ans = -1;
-        while(start <= high)
+        int end = sum ;
+        int ans = -1; // if no other possibility exist ;
+        
+        //starting binary Search;
+        while(start <= end)
         {
-            int mid = start + ( high -  start) / 2;
-            if(isPossible(pages, books, mid, students) == true) // is should be a possible ans;
+            int mid = start + (end - start) / 2 ;
+            if(ispossible(pages , books , totalstud , mid) == true)
             {
-                ans = mid;
-                high = mid - 1;
+                ans = mid ; // we get the temp ans and check in left side ;
+                end = mid - 1;
             }
             else{
-                start = mid + 1 ;
+                start = mid + 1;
             }
+            
         }
-        return ans;
+        return ans ;
     }
-    int shipWithinDays(vector<int>& weights, int days) {
-        int n = weights.size() ;
-        int x = findPages(weights , n ,  days) ;
+    int shipWithinDays(vector<int>& pages, int totalstud) {
+        int books = pages.size() ; 
+        int x = findpages(pages , books , totalstud);
         return x;
     }
 };
