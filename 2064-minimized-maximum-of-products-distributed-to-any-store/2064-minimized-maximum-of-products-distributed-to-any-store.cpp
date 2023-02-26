@@ -1,43 +1,36 @@
 class Solution {
 public:
-    
-    bool isPossible(vector<int>& piles , int speed, int maxHours){
-        int currHours = 0;
-        for(int banana: piles){
-            currHours = currHours + banana/speed;
-            if(banana % speed != 0) currHours++;
+    int ceil(int x , int y){
+        if(x % y == 0){
+            return (x / y);
         }
-        
-        if(currHours <= maxHours) return true;
-        return false;
+        else{
+            return (x / y) + 1;
+        }
     }
-    int minimizedMaximum(int n, vector<int>& piles) {
-        // at most one product type  -> eat almost one banana ;
-        // it can be possibly eat 0 no of product 
-        //let x => let x be the eating speed 
-        
-        // same as koko eating banana ;
-        
-        int low = 1, high = *max_element(piles.begin() , piles.end());
-        int ans = high;
-        while(low <= high){
-            int midSpeed = low + (high - low) / 2;
-            
-            if(isPossible(piles, midSpeed, n) == true){
-                ans = midSpeed;
-                high = midSpeed - 1;
-            } else {
-                low = midSpeed + 1;
+    bool isPossibleToDistribute(vector<int> arr , int shops , int mid){
+        int filled = 0;
+        for(int i = 0 ; i < arr.size() ; i ++){
+            filled += ceil(arr[i] , mid) ;
+        }
+        if(filled > shops) return false;
+        else return true ;
+    }
+    
+    int minimizedMaximum(int shops, vector<int>& arr) {
+        int start = 1 ;
+        int end = 100000 ;
+        int ans = shops ;
+        while(start <= end){
+            int mid = start + (end - start) /2;
+            if(isPossibleToDistribute(arr , shops , mid) == true){
+                ans = mid;
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
             }
         }
-        return ans;
+        return ans ;
     }
 };
-
-static int x=[](){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    
-    return 0;
-}();
