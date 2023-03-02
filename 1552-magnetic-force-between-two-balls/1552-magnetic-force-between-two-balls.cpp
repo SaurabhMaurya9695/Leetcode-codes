@@ -1,43 +1,43 @@
 class Solution {
 public:
     
-    bool isPossible(int d, vector<int> &stalls, int c, int n){
-	int placed = 1, placedAt = stalls[0];
-	for(int i=1; i<n; i++){
-		if(placedAt+d <= stalls[i]){
-			placed++;
-			placedAt = stalls[i];
-		}
-	}
-	if(placed >= c)
-		return true;
-	return false;
-}
-    
-    
-    int maxDistance(vector<int>& stalls, int m) {
-        sort(stalls.begin(), stalls.end());
-        int n = stalls.size() ;
-		int low = 1, high = stalls[n-1] - stalls[0];
-		int ans = 1;
-		while(low<=high)
+    bool isPossibleToPlace(vector<int>& arr , int mid , int Balls)
+    {
+        int placed = 1 , placedAt = arr[0] ;
+        for(int i = 1 ; i< arr.size() ; i ++)
         {
-			int mid = low + (high - low)/2;
-			if(isPossible(mid, stalls, m, n)){
-				ans = mid;
-				low = mid + 1;
-			}else{
-				high = mid - 1;
-			}
-		}
+            if(placedAt + mid <= arr[i])
+            {
+                placed ++ ;
+                placedAt = arr[i];
+            }
+        }
+        if(placed < Balls) return false;
+        else{
+            return true ;
+        }
+    }
+    
+    int maxDistance(vector<int>& arr, int m) {
+        
+        sort(arr.begin() , arr.end()) ;
+        int n = arr.size() ;
+        int start = 1;
+        int end = arr[n-1] - arr[0] ; // max force we can get 
+        int ans = -1;
+        while(start <= end)
+        {
+            int mid = start + (end - start) /2;
+            if(isPossibleToPlace(arr , mid , m) == true)
+            {
+                ans = mid;
+                start = mid  + 1;
+            }
+            else{
+                end = mid - 1;
+            }
+        }
         return ans ;
+        
     }
 };
-
-static int x=[](){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    
-    return 0;
-}();
