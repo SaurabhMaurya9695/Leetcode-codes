@@ -1,35 +1,18 @@
 class Solution {
 public:
-    #define ll long long
     long long zeroFilledSubarray(vector<int>& nums) {
-        ll ans = 0 , cnt = 0;
-        for(int i = 0 ;i < nums.size() ; i ++)
-        {
-            if(nums[i] == 0){
-                cnt ++ ;
+        long long zeroSeqLen = 0;
+        long long total = 0;
+        for (int n : nums) {
+            if (n == 0) {
+                zeroSeqLen++;
             }
-            else{
-                cout << cnt << endl;
-                ans += cnt * (cnt  + 1) / 2 ;
-                cnt = 0 ;
-            }
-        }
-        if(cnt == nums.size() ){
-            //means all zero ;
-             ans += cnt * (cnt  + 1) / 2 ;
-             return ans ;
-        }
-        
-        cnt = 0 ;
-        for(int i = nums.size() - 1 ; i >= 0 ; i--){
-            if(nums[i] == 0){
-                cnt ++ ;
-            }
-            else{
-                ans += cnt * (cnt  + 1) / 2 ;
-                break;
+            else {
+                total += zeroSeqLen * (zeroSeqLen + 1) / 2;
+                zeroSeqLen = 0;
             }
         }
-        return ans ;
+        total += zeroSeqLen * (zeroSeqLen + 1) / 2;
+        return total;
     }
 };
