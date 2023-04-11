@@ -1,29 +1,18 @@
 class Solution {
 public:
-    
-    long long solve(vector<int> &cell , int idx , vector<long long>&dp)
-    {
-        if(idx == cell.size() -1){
-            return 0;
-        
-        }
-        
-        if(dp[idx] != -1){
-            return dp[idx];
-        }
-        
-        long long  ans = INT_MAX;
-        for(int jump = 1; jump <= cell[idx] ; jump++){
-            if(idx + jump < cell.size() )
-                ans = min(ans , solve(cell , idx + jump , dp) + 1ll) ;
-        }
-        
-        dp[idx] = ans ;
-        return ans ;
-    }
+    #define ll long long 
     int jump(vector<int>& nums) {
         int n = nums.size() ;
-        vector<long long > dp (n + 1 , -1);
-        return (int)solve(nums , 0 , dp) ;
+        vector<int>dp(n,0); // minimum number of steps to reach end from ith position
+        dp[n-1]=0;
+        for(int i=n-2;i>=0;i--){
+            int m = 10000; // variable to store minimum number of steps
+            for(int j=1;j<=nums[i] && j+i<n;j++){
+                m = min(dp[j+i],m);
+            }
+            dp[i]=m+1;
+        }
+        return dp[0];
+
     }
 };
