@@ -4,34 +4,28 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution
 {
+    
     public:
     //Function to return max value that can be put in knapsack of capacity W.
-    int dp[1001][1001] ;
-    int solve(int capacity ,  int weight [] ,  int cost [] , int totalbag , int idx){
-        if(idx == totalbag){
-            return 0;
-        }
-        if(dp[idx][capacity] != -1){
-            return dp[idx][capacity];
-        }
-        
-        // if we take in bag then capacity is decrease by its weight 
-        int Include = (capacity >= weight[idx]) ? (solve(capacity - weight[idx] , weight , cost , totalbag , idx + 1) + cost[idx] ):  -1; // include in bag and then
-        //then we have a profit of cost[idx];
-        int NotInclude = solve(capacity , weight , cost , totalbag , idx + 1) ; // not include in bag and give choice to other
-        
-        // the return the max price 
-        return dp[idx][capacity] = max(Include , NotInclude)  ;
-    }
-    
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-        memset(dp ,-1 , sizeof(dp)) ;
-        return solve(W , wt , val , n , 0) ;
-    }
+       // Your code here
+       vector<vector<int>> dp(W + 1 , vector<int>(n + 1 , 0)) ;
+       for(int item = 1; item <= n ; item++){
+           for(int cap = 1; cap <= W ; cap ++){
+               int no = dp[cap][item-1];
+               int yes = (cap >= wt[item-1]) ? val[item - 1] + dp[cap - wt[item - 1]][item - 1] : -1 ;
+               dp[cap][item] = max(no , yes);
+           }
+       }
+       
+       return dp[W][n] ;
+    } 
 };
+
 
 //{ Driver Code Starts.
 
