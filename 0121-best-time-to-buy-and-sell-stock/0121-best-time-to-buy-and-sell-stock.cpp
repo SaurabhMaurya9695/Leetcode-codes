@@ -1,21 +1,31 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& price) {
-        // we get our ans from the minimum buy values
-        int leastSoFar = INT_MAX;
-        int n = price.size();
-        int ans = INT_MIN;
-        for(int i = 0 ; i < n ; i++){
-            if(leastSoFar > price[i]){
-                leastSoFar = price[i] ;
-         
-            }
-            
-            // now we have to find the ans with leastSoFar 
-            if(ans < price[i] - leastSoFar){
-                ans = price[i] - leastSoFar ;
-            }
+    int maxProfit(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> suff(n);
+        vector<int> pref(n);
+        int minn = INT_MAX;
+        int maxx = INT_MIN;
+
+        for(int i=0 ; i<n ; i++){
+            minn = min(minn , arr[i]);
+            pref[i] = minn;
         }
+
+        for(int i=n-1 ; i>=0 ; i--){
+            maxx = max(maxx , arr[i]);
+            suff[i] = maxx;
+        }
+
+        for(auto x : pref){
+            cout << x << " ";
+        }
+        int ans = 0;
+        for(int i=0 ; i<n-1;i++){
+            ans = max(ans , suff[i+1]-pref[i]);
+        }
+
+
         return ans;
     }
 };
