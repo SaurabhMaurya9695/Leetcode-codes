@@ -1,20 +1,19 @@
 class Solution {
 public:
-    int dp[2501][2501]; 
-    int solve(int idx , int prev_idx , vector<int>&nums)
-    {
-        if(idx == nums.size() ) return 0;
-        if(dp[idx][prev_idx + 1] != -1) return dp[idx][prev_idx + 1];
+    int lengthOfLIS(vector<int>& arr) {
+        int n = arr.size() ;
+       vector<int> dp (n + 1 , 1);
+        // 1 length smallest LIS should be possible for each index ;
+        for(int i = 0 ; i < n ; i ++) // for every idx;
+        {
+            for(int j = 0 ;j < i ; j ++){
+                if(arr[i] > arr[j] ){ // current idx should be > then the previous idx 
+                    dp[i] = max(dp[i] , dp[j] + 1) ; // take the max length from before
+                }
+            }
+        }
         
-        int yes = (prev_idx == -1 || nums[prev_idx] < nums[idx])
-                   ? solve(idx + 1, idx, nums) + 1 : 0;
-            
-        int no = solve(idx + 1, prev_idx, nums);
         
-        return dp[idx][prev_idx +1 ] = max(yes, no);
-    }
-    int lengthOfLIS(vector<int>& nums) {
-        memset(dp ,-1, sizeof(dp)) ;
-        return solve(0 , -1 , nums);
+        return *max_element(dp.begin() , dp.end()) ;
     }
 };
