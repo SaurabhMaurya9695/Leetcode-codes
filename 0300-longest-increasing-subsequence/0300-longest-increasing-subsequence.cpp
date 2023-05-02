@@ -1,19 +1,20 @@
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& arr) {
-        int n = arr.size() ;
-       vector<int> dp (n + 1 , 1);
-        // 1 length smallest LIS should be possible for each index ;
-        for(int i = 0 ; i < n ; i ++) // for every idx;
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int ind=n-1;ind>=0;ind--)
         {
-            for(int j = 0 ;j < i ; j ++){
-                if(arr[i] > arr[j] ){ // current idx should be > then the previous idx 
-                    dp[i] = max(dp[i] , dp[j] + 1) ; // take the max length from before
-                }
+            for(int prev=ind-1;prev>=-1;prev--)
+            {
+                int len=0+dp[ind+1][prev+1];
+
+                if(prev==-1 || nums[ind]>nums[prev])
+                len=max(len,1+dp[ind+1][ind+1]);
+
+                dp[ind][prev+1]=len;
             }
         }
-        
-        
-        return *max_element(dp.begin() , dp.end()) ;
+        return dp[0][-1+1];
     }
 };
