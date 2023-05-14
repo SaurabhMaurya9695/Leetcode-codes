@@ -1,16 +1,24 @@
-#define ll long long int
 class Solution {
 public:
-    long long mostPoints(vector<vector<int>>& questions) {
-        int n = questions.size();
-        vector<ll> dp(n+1, 0);
-        for(int i=n-1; i>=0 ;i--){
-            int point = questions[i][0];
-            int jump = questions[i][1];
-
-            int nextQuestion = min(n, i+jump+1);
-            dp[i] = max(dp[i+1], point + dp[nextQuestion]);
+    #define ll long long
+    ll dp[100005] ;
+    ll solve(ll idx , ll n , vector<vector<int>>& arr )
+    {
+        if(idx >= n){
+            return 0;
         }
-        return dp[0];
+
+        if(dp[idx] != -1){
+            return dp[idx] ;
+        }
+        ll solved = arr[idx][0] + solve(idx + 1 + arr[idx][1] , n , arr);
+        ll skip  = solve(idx + 1 , n , arr);
+        
+        return dp[idx]  =  max(solved , skip);
+    }
+    long long mostPoints(vector<vector<int>>& arr) {
+        ll n = arr.size() ;
+        memset(dp , -1 , sizeof(dp)) ;
+        return solve(0 , n , arr) ;
     }
 };
