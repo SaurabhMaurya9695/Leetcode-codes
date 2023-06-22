@@ -1,25 +1,40 @@
 class Solution {
 public:
+    
+    int dp[50001][2];
+    int solve(int idx ,vector<int> &cost , int fee , int buy){
+        
+        if(idx == cost.size()){
+            return 0;
+        }
+        
+        if(dp[idx][buy] != -1){
+            return dp[idx][buy] ;
+        }
+        
+        int ans = 0 ;
+        if(buy == 0){
+            //then we have to sell here .. here we have two possibilites .. to sell or do nothing 
+            
+            // if we sell here
+            int take = cost[idx] - fee + solve(idx + 1 , cost , fee , 1);
+            
+            // if we didn't sell here
+            int not_take = 0 + solve(idx + 1 , cost , fee , 0);
+            ans = max({take, not_take});
+        }
+        else{
+            // if we buy here
+            int take = -cost[idx] + solve(idx + 1 , cost , fee , 0);
+            int not_take = 0 + solve(idx + 1 , cost , fee , 1);
+            ans = max({take, not_take});
+        }
+        
+        return dp[idx][buy] = ans ;
+    }
+    
     int maxProfit(vector<int>& prices, int fee) {
-        int n = prices.size();
-        int buy[ n + 1];
-        int sell[n + 1] ;
-        if(n == 1){
-            return 0 ;
-        }
-
-        buy[0] = -prices[0];
-        sell[0] = 0;
-        int ans [n + 1];
- 
-        for (int i = 1; i < prices.size(); i++) {
-            // Treat today as Buying Day
-            buy[i] = max(buy[i - 1], sell[i - 1] - prices[i]);
-            // Treat today as Selling Day
-            sell[i] = max(sell[i - 1], buy[i - 1] + prices[i] - fee);
-            ans[i] = max(buy[i] , sell[i]) ;
-        }
-
-        return ans[n - 1];
+        memset(dp , -1 ,sizeof(dp)) ;
+        return solve(0 , prices , fee , 1);
     }
 };
