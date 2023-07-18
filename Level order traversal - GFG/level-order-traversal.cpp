@@ -42,25 +42,28 @@ class Solution
 {
     public:
     //Function to return the level order traversal of a tree.
-    vector<int> levelOrder(Node* root)
+    vector<int> res ;
+    vector<int> levelOrder(Node* node)
     {
-       if(!root) return {} ;
-       queue<Node* > q;
-       q.push(root);
-       vector<int> ans ;
-       while(!q.empty()){
-           Node* front = q.front() ;
-           ans.push_back(front->data);
-           q.pop() ;
-           if(front->left  != NULL) q.push(front->left) ;
-           if(front->right != NULL) q.push(front->right) ;
-           
-       }
-       
-       return ans ;
+        queue<Node *> q ;
+        q.push(node) ;
+        while(q.size() > 0){
+            for(int i = 0 ; i < q.size() ; i ++){
+                Node * curr  = q.front() ;
+                q.pop() ;
+                res.push_back(curr->data);
+                
+                if(curr->left != NULL){
+                    q.push(curr->left);
+                }
+                
+                if(curr->right != NULL){
+                    q.push(curr->right);
+                }
+            }
+        }
+        return res ;
     }
-    
-    
 };
 
 //{ Driver Code Starts.
