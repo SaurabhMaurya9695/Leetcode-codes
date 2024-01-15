@@ -1,22 +1,34 @@
-class Solution 
-{
+class Solution {
 public:
-    vector<vector<int>> findWinners(vector<vector<int>>& matches) 
-    {
-        map<int,int> lost;
-        for (auto m : matches)
-        {
-            if (!lost.count(m[0])) lost[m[0]] = 0;
-            lost[m[1]]++;
+    #define all(x) x.begin() , x.end()
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        // winner -> looser 
+        
+        unordered_set<int> winner ;
+        unordered_map<int,int> looser ;
+        for(auto x : matches  ){
+            winner.insert(x[0]);
+            looser[x[1]] ++ ;
         }
         
-        vector<int> zero, ones;
-        for (auto[k,l] : lost)
-        {
-            if (l == 0) zero.push_back(k);
-            if (l == 1) ones.push_back(k);
+        vector<int> allWinners ;
+        
+        for(auto x : winner){
+            if(looser.find(x) == looser.end()){
+                allWinners.push_back(x);
+            }
         }
         
-        return {zero,ones};
+        vector<int> looserWhoLosseOneMatch ;
+        for(auto x : looser){
+            if(x.second == 1){
+                looserWhoLosseOneMatch.push_back(x.first);
+            }
+        }
+        
+        sort(all(allWinners));
+        sort(all(looserWhoLosseOneMatch));
+        
+        return {allWinners , looserWhoLosseOneMatch};
     }
 };
