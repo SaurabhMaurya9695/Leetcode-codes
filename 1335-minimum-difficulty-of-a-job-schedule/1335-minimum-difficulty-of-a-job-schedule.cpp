@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dp[301][11];
+   int dp[301][11];
     int solve(vector<int>& arr, int n, int idx, int d) {
         
         // If you have only 1 day, then you will do all the remaining jobs
@@ -33,13 +33,21 @@ public:
     }
     
     int minDifficulty(vector<int>& arr, int d) {
-        int n = arr.size();
+        // every task is dependent on each other 
+        // we have options to choose 
+        // d = 2
+        // {6 }{5,4,3,2,1} ans for this is : max({6}) + max({5,4,3,2,1}) => 6 + 5 = 11 
+        // {6,5}{4,3,2,1} ans for this is : max({6,5}) + max({4,3,2,1}) => 6 + 4 = 10 
+        // {6,5,4}{3,2,1} ans for this is : max({6,5,4}) + max({3,2,1}) => 6 + 3 = 9
+        // {6,5,4,3}{2,1} ans for this is : max({6,5,4,3}) + max({2,1}) => 6 + 2 = 8
+        // {6,5,4,3,2}{1} ans for this is : max({6,5,4,3,2}) + max({1}) => 6 + 1 = 7
         
-        if (n < d)
+        int n = arr.size() ;
+        if(d > n){
             return -1;
-
-        memset(dp, -1, sizeof(dp));
+        }
+        memset(dp , -1 , sizeof(dp));
+        return solve(arr , n , 0 , d);
         
-        return solve(arr, n, 0, d);
     }
 };
